@@ -1,0 +1,37 @@
+ 
+server:
+  port: 8080
+  
+info:
+  app:
+    name: Notification Service
+    description: Provides an outbound notification service endpoint for email and sms
+    version: 1.0.0
+    
+spring:
+  cloud:
+    stream:
+      bindings:
+        smsMessageChannel:
+          destination: SmsMessages
+        emailMessageChannel:
+          destination: EmailMessages
+    default:
+      contentType: application/json
+      
+management:
+  endpoints:
+    metrics:
+      sensitive: false
+    web:
+      exposure:
+        include: info,health,prometheus
+        
+management.metrics.tags.application: ${spring.application.name} 
+        
+        
+
+ 
+  
+          
+  
