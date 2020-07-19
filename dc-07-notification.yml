@@ -157,8 +157,7 @@ services:
 
     depends_on:
       - fluentd
-    ##  - postgresDB
-    ##  - rabbitmq
+ 
 
 
   
@@ -230,11 +229,11 @@ services:
       - config-started
     links:
       - fluentd
-   # logging:
-   #   driver: "fluentd"
-   #   options:
-   #     fluentd-address: localhost:24224
-   #     tag: content.svc
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: localhost:24224
+        tag: content.svc
 
   #######################
   # api-gateway service #
@@ -349,21 +348,19 @@ services:
       - logging.level.com.thinkmicroservices=TRACE
       - spring.profiles.active=dev, swagger
        
-  #  depends_on:
-  #    - config-service
-  #    - discovery-service
+ 
       
     networks:
       - spring_ri_network
     ports:
       - 6010:8080
-    #links:
-    #  - fluentd
-    #logging:
-    #  driver: "fluentd"
-    #  options:
-    #    fluentd-address: localhost:24224
-    #    tag:  email-outbound.svc
+    links:
+      - fluentd
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: localhost:24224
+        tag:  email-outbound.svc
 
 
   ########################
@@ -381,8 +378,8 @@ services:
       - spring.rabbitmq.username=think
       - spring.rabbitmq.password=microservices
       - spring.profiles.active=dev, swagger, twilio
-      - twilio.authID=0ec06706e651f0e825bbb026ccf24ac2
-      - twilio.accountSID=ACbc5aaad89084f9bea7df5a5f7c7d3f85
+      - twilio.authID= SUPPLY-YOUR_TWILIO_AUTHID
+      - twilio.accountSID=SUPPLY-YOUR-TWILIO-ACCOUNT-SID
       - logging.level.com.thinkmicroservices=INFO
        
     depends_on:
@@ -395,11 +392,11 @@ services:
       - 6020:8080
     links:
       - fluentd
-   # logging:
-    #  driver: "fluentd"
-   #   options:
-   #     fluentd-address: localhost:24224
-   #     tag:  sms-outbound.svc
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: localhost:24224
+        tag:  sms-outbound.svc
 
   ########################
   # notification service #
